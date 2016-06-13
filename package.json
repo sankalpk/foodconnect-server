@@ -1,0 +1,17 @@
+{
+  "name": "foodconnect-server",
+  "description": "Food Connect Group's backend.",
+  "version": "0.0.1",
+  "private": false,
+  "license": "MIT",
+  "author": "Sankalp Kulshreshtha",
+  "engines": {
+    "node": "~4.2"
+  },
+  "dependencies": {
+    "connect-memcached": "^0.1.0",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0"
+  }
+}
