@@ -25,11 +25,9 @@ app.get('/', function (req, res, next) {
   res.end('Viewed ' + req.session.views + ' times.');
 });
 
-if (module === require.main) {
-  var server = app.listen(process.env.PORT, function () { //TODO add env here
-    console.log('App listening on port %d', server.address().port);
-  });
-  console.log('Press Ctrl+C to quit.');
-}
+
+app.listen(process.env.PORT, function () {
+  console.log('App listening on port %d', server.address().port);
+});
 
 module.exports = app;
