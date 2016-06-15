@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv').config();
 var express = require('express');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
@@ -25,9 +26,16 @@ app.get('/', function (req, res, next) {
   res.end('Viewed ' + req.session.views + ' times.');
 });
 
+app.post('/forms/driver', function (req, res) {
+  res.json({
+    data:{
+      message: "Driver form submitted"
+    }
+  });
+});
 
 app.listen(process.env.PORT, function () {
-  console.log('App listening on port %d', server.address().port);
+  console.log('App listening on port %d', process.env.PORT);
 });
 
 module.exports = app;
