@@ -5,10 +5,12 @@ var express = require('express');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var MemcachedStore = require('connect-memcached')(session);
-
+var bodyParser  = require('body-parser');
 var app = express();
 
 app.use(cookieParser());
+app.use(bodyParser.json());
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   proxy: 'true',
