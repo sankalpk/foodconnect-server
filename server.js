@@ -22,6 +22,15 @@ app.use(session({
   })
 }));
 
+var handleDatastoreSave = function(res, err, data) {
+  if (err) {
+    res.status(400);
+    res.json({data:{message: "Error. Driver form not submitted"}});
+  } else {
+    res.json({data:data});
+  }
+}
+
 app.get('/', function (req, res, next) {
   if (req.session.views) {
     ++req.session.views;
@@ -40,14 +49,7 @@ app.post('/forms/driver', function (req, res) {
       email: req.body.email,
       phone: req.body.phone
     }
-  }, function (err) {
-    if (err) {
-      res.status(400);
-      res.json({data:{message: "Error. Driver form not submitted"}});
-    } else {
-      res.json({data:{message: "Success. Driver form submitted"}});
-    }
-  });
+  }, handleDatastoreSave.bind(this, res));
 });
 
 app.post('/forms/organizer', function (req, res) {
@@ -60,14 +62,7 @@ app.post('/forms/organizer', function (req, res) {
       phone: req.body.phone,
       city: req.body.city
     }
-  }, function (err) {
-    if (err) {
-      res.status(400);
-      res.json({data:{message: "Error. Organizer form not submitted"}});
-    } else {
-      res.json({data:{message: "Success. Organizer form submitted"}});
-    }
-  });
+  }, handleDatastoreSave.bind(this, res));
 });
 
 app.post('/forms/get_updates', function (req, res) {
@@ -77,14 +72,7 @@ app.post('/forms/get_updates', function (req, res) {
       created: new Date().toJSON(),
       email: req.body.email,
     }
-  }, function (err) {
-    if (err) {
-      res.status(400);
-      res.json({data:{message: "Error. Get updates form not submitted"}});
-    } else {
-      res.json({data:{message: "Success. Get updates form submitted"}});
-    }
-  });
+  }, handleDatastoreSave.bind(this, res));
 });
 
 app.listen(process.env.PORT, function () {
