@@ -9,7 +9,7 @@
     "node": "~4.2"
   },
   "scripts": {
-    "start": "node --debug server.js"
+    "start": "nodemon --debug server.js"
   },
   "dependencies": {
     "body-parser": "^1.15.1",
@@ -19,5 +19,8 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "gcloud": "^0.36.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.2"
   }
 }
