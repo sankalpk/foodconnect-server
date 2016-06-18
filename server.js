@@ -1,5 +1,4 @@
 'use strict';
-
 require('dotenv').config();
 var express = require('express');
 var session = require('express-session');
@@ -8,7 +7,7 @@ var MemcachedStore = require('connect-memcached')(session);
 var gcloud = require('gcloud');
 var bodyParser  = require('body-parser');
 var datastore = gcloud.datastore();
-
+var DriverForm = require('./models/driver-form');
 var app = express();
 
 app.use(cookieParser());
@@ -22,15 +21,6 @@ app.use(session({
   })
 }));
 
-var handleDatastoreSave = function(res, err, data) {
-  if (err) {
-    res.status(400);
-    res.json({data:{message: "Error. Driver form not submitted"}});
-  } else {
-    res.json({data:data});
-  }
-}
-
 app.get('/', function (req, res, next) {
   if (req.session.views) {
     ++req.session.views;
@@ -41,39 +31,36 @@ app.get('/', function (req, res, next) {
 });
 
 app.post('/forms/driver', function (req, res) {
-  datastore.save({
-    key: datastore.key('DriverForm'),
-    data: {
-      created: new Date().toJSON(),
-      name: req.body.name,
-      email: req.body.email,
-      phone: req.body.phone
-    }
-  }, handleDatastoreSave.bind(this, res));
+  var form = new DriverForm(req.body);
+  form.save().then(function(){
+    res.json({success: "success"});
+  }, function(){
+    res.json({errors: form.errors})
+  })
 });
 
-app.post('/forms/organizer', function (req, res) {
-  datastore.save({
-    key: datastore.key('OrganizerForm'),
-    data: {
-      created: new Date().toJSON(),
-      name: req.body.name,
-      email: req.body.email,
-      phone: req.body.phone,
-      city: req.body.city
-    }
-  }, handleDatastoreSave.bind(this, res));
-});
+// app.post('/forms/organizer', function (req, res) {
+//   datastore.save({
+//     key: datastore.key('OrganizerForm'),
+//     data: {
+//       created: new Date().toJSON(),
+//       name: req.body.name,
+//       email: req.body.email,
+//       phone: req.body.phone,
+//       city: req.body.city
+//     }
+//   }, handleDatastoreSave.bind(this, res));
+// });
 
-app.post('/forms/get_updates', function (req, res) {
-  datastore.save({
-    key: datastore.key('GetUpdatesForm'),
-    data: {
-      created: new Date().toJSON(),
-      email: req.body.email,
-    }
-  }, handleDatastoreSave.bind(this, res));
-});
+// app.post('/forms/get_updates', function (req, res) {
+//   datastore.save({
+//     key: datastore.key('GetUpdatesForm'),
+//     data: {
+//       created: new Date().toJSON(),
+//       email: req.body.email,
+//     }
+//   }, handleDatastoreSave.bind(this, res));
+// });
 
 app.listen(process.env.PORT, function () {
   console.log('App listening on port %d', process.env.PORT);

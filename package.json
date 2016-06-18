@@ -9,9 +9,11 @@
     "node": "~4.2"
   },
   "scripts": {
-    "start": "nodemon --debug server.js"
+    "start": "nodemon --debug server.js",
+    "datastore": "gcloud beta emulators datastore start"
   },
   "dependencies": {
+    "bluebird": "^3.4.1",
     "body-parser": "^1.15.1",
     "connect-memcached": "^0.1.0",
     "cookie-parser": "^1.4.1",
