@@ -8,6 +8,8 @@ var gcloud = require('gcloud');
 var bodyParser  = require('body-parser');
 var datastore = gcloud.datastore();
 var DriverForm = require('./models/driver-form');
+var OrganizerForm = require('./models/organizer-form');
+var GetUpdatesForm = require('./models/get-updates-form');
 var app = express();
 
 app.use(cookieParser());
@@ -39,28 +41,23 @@ app.post('/forms/driver', function (req, res) {
   })
 });
 
-// app.post('/forms/organizer', function (req, res) {
-//   datastore.save({
-//     key: datastore.key('OrganizerForm'),
-//     data: {
-//       created: new Date().toJSON(),
-//       name: req.body.name,
-//       email: req.body.email,
-//       phone: req.body.phone,
-//       city: req.body.city
-//     }
-//   }, handleDatastoreSave.bind(this, res));
-// });
+app.post('/forms/organizer', function (req, res) {
+  var form = new OrganizerForm(req.body);
+  form.save().then(function(){
+    res.json({success: "success"});
+  }, function(){
+    res.json({errors: form.errors})
+  })
+});
 
-// app.post('/forms/get_updates', function (req, res) {
-//   datastore.save({
-//     key: datastore.key('GetUpdatesForm'),
-//     data: {
-//       created: new Date().toJSON(),
-//       email: req.body.email,
-//     }
-//   }, handleDatastoreSave.bind(this, res));
-// });
+app.post('/forms/get_updates', function (req, res) {
+  var form = new GetUpdatesForm(req.body);
+  form.save().then(function(){
+    res.json({success: "success"});
+  }, function(){
+    res.json({errors: form.errors})
+  })
+});
 
 app.listen(process.env.PORT, function () {
   console.log('App listening on port %d', process.env.PORT);

@@ -4,24 +4,20 @@ var datastore = gcloud.datastore();
 var bluebird = require('bluebird');
 var datastore_save = bluebird.promisify(datastore.save,  {context: datastore});
 
-var DriverForm = function(props){
+var GetUpdatesForm = function(props){
   /* Set default props to empty object */
   var props = typeof props !== 'undefined' ? props : {}
 
   /* Attributes */
-  this.name = props.name;
   this.email = props.email;
-  this.phone = props.phone;
 
   /* Setup */
   this.save = function(){
     return datastore_save({
-      key: datastore.key('DriverForm'),
+      key: datastore.key('GetUpdatesForm'),
       data: {
         createdAt: new Date().toJSON(),
-        name: this.name,
-        email: this.email,
-        phone: this.phone
+        email: this.email
       }
     }).catch(function(err){
         this.errors = typeof this.errors !== 'undefined' ? this.errors : [];
@@ -30,12 +26,13 @@ var DriverForm = function(props){
     }.bind(this))
   }
 }
-DriverForm.all = function(onData, onError, onInfo){
-  var query = datastore.createQuery('DriverForm');
+
+GetUpdatesForm.all = function(){
+  var query = datastore.createQuery('GetUpdatesForm');
   datastore.runQuery(query)
   .on('data', onData)
   .on('error', onError)
   .on('info', onInfo)
 }
 
-module.exports = DriverForm;
+module.exports = GetUpdatesForm;

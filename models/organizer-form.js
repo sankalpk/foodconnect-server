@@ -4,7 +4,7 @@ var datastore = gcloud.datastore();
 var bluebird = require('bluebird');
 var datastore_save = bluebird.promisify(datastore.save,  {context: datastore});
 
-var DriverForm = function(props){
+var OrganizerForm = function(props){
   /* Set default props to empty object */
   var props = typeof props !== 'undefined' ? props : {}
 
@@ -12,16 +12,18 @@ var DriverForm = function(props){
   this.name = props.name;
   this.email = props.email;
   this.phone = props.phone;
+  this.city = props.city;
 
   /* Setup */
   this.save = function(){
     return datastore_save({
-      key: datastore.key('DriverForm'),
+      key: datastore.key('OrganizerForm'),
       data: {
         createdAt: new Date().toJSON(),
         name: this.name,
         email: this.email,
-        phone: this.phone
+        phone: this.phone,
+        city: this.city
       }
     }).catch(function(err){
         this.errors = typeof this.errors !== 'undefined' ? this.errors : [];
@@ -30,12 +32,13 @@ var DriverForm = function(props){
     }.bind(this))
   }
 }
-DriverForm.all = function(onData, onError, onInfo){
-  var query = datastore.createQuery('DriverForm');
+
+OrganizerForm.all = function(){
+  var query = datastore.createQuery('OrganizerForm');
   datastore.runQuery(query)
   .on('data', onData)
   .on('error', onError)
   .on('info', onInfo)
 }
 
-module.exports = DriverForm;
+module.exports = OrganizerForm;
