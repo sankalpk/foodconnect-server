@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "nodemon --debug server.js",
-    "datastore": "gcloud beta emulators datastore start"
+    "datastore": "gcloud beta emulators datastore start",
+    "deploy": "gcloud preview app deploy"
   },
   "dependencies": {
     "bluebird": "^3.4.1",
