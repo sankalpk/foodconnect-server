@@ -9,7 +9,7 @@
     "node": "~4.2"
   },
   "scripts": {
-    "start": "nodemon --debug server.js",
+    "dev-start": "nodemon --debug server.js",
     "datastore": "gcloud beta emulators datastore start",
     "deploy": "gcloud preview app deploy"
   },
