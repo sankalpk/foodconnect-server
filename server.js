@@ -10,6 +10,7 @@ var datastore = gcloud.datastore();
 var DriverForm = require('./models/driver-form');
 var OrganizerForm = require('./models/organizer-form');
 var GetUpdatesForm = require('./models/get-updates-form');
+var PickupForm = require('./models/pickup-form');
 var app = express();
 
 app.use(cookieParser());
@@ -52,6 +53,15 @@ app.post('/forms/organizer', function (req, res) {
 
 app.post('/forms/get_updates', function (req, res) {
   var form = new GetUpdatesForm(req.body);
+  form.save().then(function(){
+    res.json({success: "success"});
+  }, function(){
+    res.json({errors: form.errors})
+  })
+});
+
+app.post('/forms/pickup', function (req, res) {
+  var form = new PickupForm(req.body);
   form.save().then(function(){
     res.json({success: "success"});
   }, function(){
