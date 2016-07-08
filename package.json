@@ -18,6 +18,7 @@
     "body-parser": "^1.15.1",
     "connect-memcached": "^0.1.0",
     "cookie-parser": "^1.4.1",
+    "cors": "^2.7.1",
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "express-session": "^1.13.0",

@@ -21,11 +21,13 @@ var PickupForm = function(props){
       phone: this.phone,
       completeBefore: this.completeBefore,
       notes: this.notes
-    }).then(function(response){
+    })
+    .then(function(response){
       if(response.status !== 200){
         throw response.statusText;
       }
-    }).catch(function(err){
+    })
+    .catch(function(err){
         this.errors = typeof this.errors !== 'undefined' ? this.errors : [];
         this.errors.push(`Error saving to Onfleet: ${err}`);
         throw "Error saving to OnFleet";

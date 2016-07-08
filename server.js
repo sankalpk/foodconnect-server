@@ -1,6 +1,7 @@
 'use strict';
 require('dotenv').config();
 var express = require('express');
+var cors = require('cors')
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var MemcachedStore = require('connect-memcached')(session);
@@ -13,6 +14,7 @@ var GetUpdatesForm = require('./models/get-updates-form');
 var PickupForm = require('./models/pickup-form');
 var app = express();
 
+app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
