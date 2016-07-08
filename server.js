@@ -35,40 +35,30 @@ app.get('/', function (req, res, next) {
   res.end('Viewed ' + req.session.views + ' times.');
 });
 
-app.post('/forms/driver', function (req, res) {
-  var form = new DriverForm(req.body);
+var modelSave = function(req, res, model){
+  var form = new model(req.body);
   form.save().then(function(){
     res.json({success: "success"});
   }, function(){
-    res.json({errors: form.errors})
+    res.status(400);
+    res.json({errors: form.errors});
   })
+}
+
+app.post('/forms/driver', function (req, res) {
+  modelSave(req,res, DriverForm);
 });
 
 app.post('/forms/organizer', function (req, res) {
-  var form = new OrganizerForm(req.body);
-  form.save().then(function(){
-    res.json({success: "success"});
-  }, function(){
-    res.json({errors: form.errors})
-  })
+  modelSave(req,res, OrganizerForm);
 });
 
 app.post('/forms/get_updates', function (req, res) {
-  var form = new GetUpdatesForm(req.body);
-  form.save().then(function(){
-    res.json({success: "success"});
-  }, function(){
-    res.json({errors: form.errors})
-  })
+  modelSave(req,res, GetUpdatesForm);
 });
 
 app.post('/forms/pickup', function (req, res) {
-  var form = new PickupForm(req.body);
-  form.save().then(function(){
-    res.json({success: "success"});
-  }, function(){
-    res.json({errors: form.errors})
-  })
+  modelSave(req,res,PickupForm);
 });
 
 app.listen(process.env.PORT, function () {
