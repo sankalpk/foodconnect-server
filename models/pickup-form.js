@@ -11,6 +11,7 @@ var PickupForm = function(props){
   this.name = props.name;
   this.phone = props.phone;
   this.completeBefore = props.completeBefore;
+  this.completeAfter = props.completeAfter;
   this.notes = props.notes;
 
   /* Setup */
@@ -20,6 +21,7 @@ var PickupForm = function(props){
       name: this.name,
       phone: this.phone,
       completeBefore: this.completeBefore,
+      completeAfter: this.completeAfter,
       notes: this.notes
     })
     .then(function(response){

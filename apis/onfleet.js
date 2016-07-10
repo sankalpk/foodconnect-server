@@ -34,6 +34,7 @@ var OnFleet = function(apiKey){
         }
       ],
       "completeBefore": params.completeBefore,
+      "completeAfter": params.completeAfter,
       "notes": params.notes,
       "pickupTask": true
     }
