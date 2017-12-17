@@ -18,21 +18,8 @@ app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  proxy: 'true',
-  store: new MemcachedStore({
-    hosts: [process.env.MEMCACHE_URL]
-  })
-}));
-
 app.get('/', function (req, res, next) {
-  if (req.session.views) {
-    ++req.session.views;
-  } else {
-    req.session.views = 1;
-  }
-  res.end('Viewed ' + req.session.views + ' times.');
+  res.status(200).send('Hello!').end();
 });
 
 var modelSave = function(req, res, model){
