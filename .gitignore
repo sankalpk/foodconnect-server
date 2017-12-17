@@ -40,3 +40,5 @@ jspm_packages
 Procfile
 .env
 app.yaml
+.vscode/
+dump.rdb
