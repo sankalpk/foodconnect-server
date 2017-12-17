@@ -61,7 +61,8 @@ app.post('/forms/pickup', function (req, res) {
   modelSave(req,res,PickupForm);
 });
 
-app.listen(8080, function () {
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, function () {
   console.log('App listening on port %d', process.env.PORT);
 });
 
